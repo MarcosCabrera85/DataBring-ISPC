@@ -75,3 +75,7 @@ class ProductosSpider(scrapy.Spider):
             "Nombre Producto": nombre_producto,
             "Precio": precio,
         }
+
+# 06 - Extrer los datos:
+# En la terminal, sobre la carpeta en la que esta guardado el codigo, hay que ejecutar el siguiente comando:
+# scrapy runspider scrapy_16102023_v01.py -o productos.csv
