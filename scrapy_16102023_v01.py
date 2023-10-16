@@ -4,3 +4,7 @@
 # 01 - Importamos las librerias necesarias:
 import scrapy
 from datetime import datetime
+
+# 02-  Configuramos la fecha  y hora actual:
+hora = datetime.now().time()
+fecha = datetime.now().today()
