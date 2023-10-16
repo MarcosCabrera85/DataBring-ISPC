@@ -54,3 +54,24 @@ class ProductosSpider(scrapy.Spider):
         "https://www.hiperlibertad.com.ar/cafe-molido-bonafide-sensaciones-torrado-intenso-500-gr/p",
         "https://www.hiperlibertad.com.ar/yerba-playadito-suave-bcp-1kg/p",
     ]
+
+# 05 - Configuro la funcion Parse:
+    def parse(self, response):
+        # Utilizando expresiones CSS
+        nombre_producto = response.css('span.vtex-store-components-3-x-productBrand::text').get()
+        # El precio esta dividido en 3 span diferentes (miles, cientos, centavos)
+        precio_producto_miles = response.css("span.vtex-product-price-1-x-currencyInteger::text").getall()
+
+        if len(precio_producto_miles) == 1:
+            precio = precio_producto_miles # cuando el producto vale cientos
+        elif len(precio_producto_miles[0])> 1:
+            precio = precio_producto_miles[1] # cuando el producto tiene un precio anterior, enfatizando una oferta
+        else:
+            precio = f'{precio_producto_miles[0]}.{precio_producto_miles[1]}' # cuando vale miles y cientos
+
+        yield {
+            "fecha": fechaActual,
+            "hora": horaActual,
+            "Nombre Producto": nombre_producto,
+            "Precio": precio,
+        }
