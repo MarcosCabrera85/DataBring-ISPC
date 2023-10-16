@@ -8,3 +8,10 @@ from datetime import datetime
 # 02-  Configuramos la fecha  y hora actual:
 hora = datetime.now().time()
 fecha = datetime.now().today()
+
+#03- Formato correcto para la fecha y hora:
+fHoraMinuto = "%H:%M"
+fDiaMesAño = "%d-%m-%Y"
+
+horaActual = hora.strftime(fHoraMinuto)
+fechaActual = fecha.strftime(fDiaMesAño)
