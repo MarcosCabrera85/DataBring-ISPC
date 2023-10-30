@@ -13,7 +13,6 @@ class DataCity:
                 consultaSql = 'SELECT * from ciudad'
                 self.cursor.execute(consultaSql)
                 resultado = self.cursor.fetchall()
-                self.db.close()
                 return resultado
             except mysql.connector.Error as descripcionError:
                 print("NO SE PUDO BUSCAR CIUDADES ", descripcionError)
