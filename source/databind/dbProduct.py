@@ -23,12 +23,12 @@ class DataProduct:
     def registerProduct(self,producto):
         if self.db.is_connected():
             try:
-                consultaSql = 'INSERT INTO productos VALUES(NULL,%s,%s,%s)'
+                consultaSql = 'INSERT INTO productos VALUES(NULL,%s,%s,%s,%s)'
                 datos = (
                     producto.getNombre(),
                     producto.getMarca(),
-                    producto.getPrecio()
-                    #producto.getCiudad()
+                    producto.getPrecio(),
+                    producto.getCiudad(),
                 )
                 self.cursor.execute(consultaSql,datos)
                 self.db.commit()

@@ -2,6 +2,7 @@ from databind.dbCity import *
 from databind.dbProduct import *
 from tkinter import *
 from tkinter import ttk #submodulo para crear las tablas, combobox y otras cosas
+import webbrowser
 
 class ViewProduct:
     def __init__(self, db):
@@ -69,13 +70,34 @@ class ViewProduct:
         return nombres
 
 
+    #Funcion Importar(desde csv)
+    def viewImportCsv(self, tabla, ciudadCbox):
+        try:
+            with open('data/productos4.csv','r') as archivo:
+                ciudad = ciudadCbox.get()
+                marca = 'S/marca'
+                archivo.readline()
+                for linea in archivo:
+                    datos = linea.strip().split(';')
+                    self.dataProduct.createProduct(0, datos[2], marca, datos[3], ciudad)
+                archivo.close()
+            self.viewListProducts(tabla)
+        except Exception as error:
+            print("An exception occurred:", type(error).__name__, "-", error)
+
+    #funcion para visualizar los datos vía web
+    def viewLinkWeb(self):
+        url = 'https://app.powerbi.com/view?r=eyJrIjoiNTZmZTUyZTUtZjY4MC00MDBjLTkxMjgtY2I0Y2U0OWFlNGMyIiwidCI6ImVjNmU3NTQ4LWZjZTMtNGY0NC05NjZhLWY0N2EwZjEyNWE4MSIsImMiOjR9'
+        webbrowser.open_new(url)
+
+
     #####                    #####
     ##### Creamos la ventana #####
     #####                    #####
 
     def initView(self):
         view = Tk()
-        view.geometry('1000x382')
+        view.geometry('1000x417')
         view.title('Registro de Productos')
         view.configure(background='burlywood1')
         self.view = view
@@ -155,12 +177,16 @@ class ViewProduct:
         listarBtn.place(x=50,y=250, width=84, height=30)
         limpiarBtn = Button(text='Limpiar',bg='tan1',font=('calibi',12,'bold'),command=lambda:self.viewEmptyFields(tabla, productoTxt, marcaTxt, precioTxt))
         limpiarBtn.place(x=162,y=250, width=84, height=30)
+        importarBtn = Button(text='Importar',bg='tan1',font=('calibi',12,'bold'),command=lambda:self.viewImportCsv(tabla, ciudadCbox))
+        importarBtn.place(x=286, y=250, width=84, height=30)
         aceptarBtn = Button(text='Aceptar',bg='tan1',font=('calibi',12,'bold'),command=lambda:self.viewCreateProduct(tabla, productoTxt, marcaTxt, precioTxt, ciudadCbox))
         aceptarBtn.place(x=20,y=320,width=140,height=30)
         cancelarBtn = Button(text='Cancelar',bg='tan1',font=('calibi',12,'bold'),command=lambda:self.viewEmptyFields(tabla, productoTxt, marcaTxt, precioTxt))
         cancelarBtn.place(x=190,y=320,width=140,height=30)
         eliminarBtn = Button(text='Eliminar',bg='tan1',font=('calibi',12,'bold'),command=lambda:self.viewDeleteProduct(tabla))
         eliminarBtn.place(x=360,y=320,width=140,height=30)
+        visualizarBtn = Button(text='Visualizar Datos', bg='tan1',font=('calibi',13,'bold'),command=lambda:self.viewLinkWeb())
+        visualizarBtn.place(x=130,y=370, width=260, height=30)
 
         view.resizable(False,False)
         view.mainloop()

@@ -1,17 +1,12 @@
 CREATE TABLE productos(
     id int PRIMARY KEY AUTO_INCREMENT,
-    nombre VARCHAR(50),
-    marca VARCHAR(50),
-    precio VARCHAR(50)
-)
+    nombre VARCHAR(90),
+    marca VARCHAR(90),
+    precio VARCHAR(90),
+    ciudad VARCHAR(90)
+);
 
 CREATE TABLE ciudad (
     id int PRIMARY KEY AUTO_INCREMENT,
     nombre VARCHAR(50)
-
-)
-
-
-
-
-
+);
